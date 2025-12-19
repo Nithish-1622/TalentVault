@@ -36,14 +36,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-purple-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-6">
       <div className="w-full max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Left Side - Lottie Animation */}
           <div className="hidden lg:flex flex-col items-center justify-center bg-white rounded-3xl shadow-xl p-12">
-            <div className="w-full max-w-lg">
+            <div className="w-full h-[400px] max-w-2xl">
               <DotLottieReact
-                src="https://lottie.host/8501101f-07b2-47a9-9819-5d441f00dbc8/lQinnZduf2.lottie"
+                src="https://lottie.host/e79a1a86-df0b-41ea-aa58-8d46a7d3a65d/zYRy4n5EEI.lottie"
                 loop
                 autoplay
               />

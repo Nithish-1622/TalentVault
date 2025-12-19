@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, Briefcase, CheckCircle } from 'lucide-react';
+import { Upload, Briefcase, CheckCircle, Mail, Phone, User, FileText } from 'lucide-react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { candidateService } from '../services/candidateService';
 import { jobRoleService } from '../services/jobRoleService';
 import toast from 'react-hot-toast';
@@ -100,155 +101,267 @@ export default function ApplyPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 flex items-center justify-center p-4">
-        <div className="text-center max-w-md">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
-            <CheckCircle className="w-12 h-12 text-green-600" />
+      <div className="min-h-screen margin-top-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 flex items-center justify-center p-6">
+        <div className="max-w-2xl w-full">
+          <div className="bg-white rounded-3xl shadow-2xl p-12 text-center">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full mb-6 shadow-lg">
+              <CheckCircle className="w-14 h-14 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Application Submitted Successfully! 🎉
+            </h1>
+            <p className="text-xl text-gray-600 mb-3">
+              Thank you for applying to TalentVault
+            </p>
+            <p className="text-gray-500 mb-8 max-w-lg mx-auto">
+              Our AI is already analyzing your resume. Our recruitment team will review your application and reach out to you within 2-3 business days.
+            </p>
+            <button
+              onClick={() => navigate('/')}
+              className="btn-primary px-8 py-3"
+            >
+              Back to Home
+            </button>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Application Submitted!</h1>
-          <p className="text-gray-600 mb-8">
-            Thank you for applying. Our recruitment team will review your application and get back to you soon.
-          </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="btn-primary"
-          >
-            Submit Another Application
-          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-purple-50 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl mb-4 shadow-lg">
-            <Briefcase className="w-8 h-8 text-white" />
+    <div className="h-screen overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center j">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 " style={{maxHeight: '900px'}}>
+          {/* Left Side - Hero Section with Animation */}
+          <div className="order-2 lg:order-1 flex">
+            <div className="bg-white rounded-3xl shadow-xl p-6 lg:p-8 flex flex-col justify-between w-full">
+              {/* Logo */}
+             <div className="w-full flex-grow flex items-center justify-center">
+                <div className="w-full  h-[300px] max-w-2xl">
+                  <DotLottieReact
+                    src="https://lottie.host/8501101f-07b2-47a9-9819-5d441f00dbc8/lQinnZduf2.lottie"
+                    loop
+                    autoplay
+                  />
+                </div>
+              </div>
+
+              
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+                Join Our Talent Pool
+              </h1>
+              <p className="text-lg text-gray-600 mb-6">
+                Take the first step towards your dream career. Our AI-powered system will match you with the perfect opportunities.
+              </p>
+
+              {/* Features */}
+              <div className="space-y-3 mb-6">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 text-primary-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-sm">AI-Powered Matching</h3>
+                    <p className="text-xs text-gray-600">Our AI analyzes your resume to find the best job matches</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 text-primary-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-sm">Quick & Easy</h3>
+                    <p className="text-xs text-gray-600">Just 5 fields and your resume - we handle the rest</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 text-primary-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-sm">Fast Response</h3>
+                    <p className="text-xs text-gray-600">Get feedback within 2-3 business days</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Lottie Animation */}
+                          </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">Apply to TalentVault</h1>
-          <p className="text-lg text-gray-600">
-            Fill out this simple form to join our talent pool
-          </p>
-        </div>
 
-        {/* Application Form */}
-        <div className="card">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Full Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                className="input-field"
-                placeholder="John Doe"
-                required
-              />
+          {/* Right Side - Application Form */}
+          <div className="order-1 lg:order-2 flex">
+            <div className="lg:hidden text-center mb-6">
+              <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl mb-3 shadow-lg">
+                <Briefcase className="w-7 h-7 text-white" />
+              </div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Apply Now</h1>
+              <p className="text-gray-600">Join our talent community</p>
             </div>
 
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="input-field"
-                placeholder="john.doe@email.com"
-                required
-              />
-            </div>
+            <div className="card w-full flex flex-col">
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold text-gray-900 mb-1">Application Form</h2>
+                <p className="text-sm text-gray-600">Fill in your details below</p>
+              </div>
 
-            {/* Phone */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="input-field"
-                placeholder="+1-555-0123"
-                required
-              />
-            </div>
+              <div className="flex-grow overflow-y-auto pr-2" style={{maxHeight: 'calc(100% - 140px)'}}>
+                <form onSubmit={handleSubmit} className="space-y-3">
+                {/* Full Name */}
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      className="input-field pl-10"
+                      placeholder="John Doe"
+                      required
+                    />
+                  </div>
+                </div>
 
-            {/* Job Role */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Job Role / Category <span className="text-red-500">*</span>
-              </label>
-              <select
-                name="jobRoleId"
-                value={formData.jobRoleId}
-                onChange={handleChange}
-                className="input-field"
-                required
-              >
-                <option value="">Select a role</option>
-                {jobRoles.map((role) => (
-                  <option key={role.id} value={role.id}>
-                    {role.role_name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                {/* Email */}
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    Email Address <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="input-field pl-10"
+                      placeholder="john.doe@email.com"
+                      required
+                    />
+                  </div>
+                </div>
 
-            {/* Resume Upload */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Upload Resume <span className="text-red-500">*</span>
-              </label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary-400 transition-colors">
-                <input
-                  type="file"
-                  accept=".pdf,.docx"
-                  onChange={handleFileChange}
-                  className="hidden"
-                  id="resume-upload"
-                  required
-                />
-                <label htmlFor="resume-upload" className="cursor-pointer">
-                  <Upload className="w-10 h-10 text-gray-400 mx-auto mb-3" />
-                  <p className="text-sm font-medium text-gray-700 mb-1">
-                    {resumeFile ? resumeFile.name : 'Click to upload resume'}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    PDF or DOCX (max 5MB)
-                  </p>
-                </label>
+                {/* Phone */}
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="input-field pl-10"
+                      placeholder="+1-555-0123"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Job Role */}
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    Preferred Job Role <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                    <select
+                      name="jobRoleId"
+                      value={formData.jobRoleId}
+                      onChange={handleChange}
+                      className="input-field pl-10 appearance-none"
+                      required
+                    >
+                      <option value="">Select your role</option>
+                      {jobRoles.map((role) => (
+                        <option key={role.id} value={role.id}>
+                          {role.role_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Resume Upload */}
+                <div>
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
+                    Upload Resume <span className="text-red-500">*</span>
+                  </label>
+                  <div className={`border-2 border-dashed rounded-xl p-4 text-center transition-all ${
+                    resumeFile 
+                      ? 'border-primary-400 bg-primary-50' 
+                      : 'border-gray-300 hover:border-primary-400 hover:bg-gray-50'
+                  }`}>
+                    <input
+                      type="file"
+                      accept=".pdf,.docx"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      id="resume-upload"
+                      required
+                    />
+                    <label htmlFor="resume-upload" className="cursor-pointer">
+                      <div className={`w-12 h-12 mx-auto mb-2 rounded-full flex items-center justify-center ${
+                        resumeFile ? 'bg-primary-100' : 'bg-gray-100'
+                      }`}>
+                        {resumeFile ? (
+                          <FileText className="w-6 h-6 text-primary-600" />
+                        ) : (
+                          <Upload className="w-6 h-6 text-gray-400" />
+                        )}
+                      </div>
+                      <p className="text-sm font-semibold text-gray-700 mb-1">
+                        {resumeFile ? resumeFile.name : 'Click to upload your resume'}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        PDF or DOCX format • Maximum 5MB
+                      </p>
+                      {resumeFile && (
+                        <p className="text-xs text-primary-600 mt-1 font-medium">
+                          ✓ File ready for upload
+                        </p>
+                      )}
+                    </label>
+                  </div>
+                </div>
+              </form>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                onClick={handleSubmit}
+                className="w-full btn-primary py-3 text-base font-semibold shadow-lg hover:shadow-xl transition-all mt-4">
+                
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Submitting Application...
+                    </span>
+                  ) : (
+                    'Submit Application'
+                  )}
+                </button>
+
+              <div className="mt-3 pt-3 border-t border-gray-100 text-center">
+                <p className="text-sm text-gray-600">
+                  Recruiter?{' '}
+                  <a href="/login" className="text-primary-600 hover:text-primary-700 font-medium">
+                    Login here
+                  </a>
+                </p>
               </div>
             </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full btn-primary py-3 text-base"
-            >
-              {loading ? 'Submitting...' : 'Submit Application'}
-            </button>
-          </form>
-
-          <div className="mt-6 pt-6 border-t border-gray-100 text-center">
-            <p className="text-sm text-gray-600">
-              Recruiter?{' '}
-              <a href="/login" className="text-primary-600 hover:text-primary-700 font-medium">
-                Login here
-              </a>
-            </p>
           </div>
         </div>
       </div>
