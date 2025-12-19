@@ -369,19 +369,6 @@ SELECT status, COUNT(*) as count FROM candidates GROUP BY status;
 10. **Regular security audits**
 
 
-## Common Issues and Solutions
-
-### Issue: Slow Resume Processing
-**Solution**: Implement queue system (Bull, RabbitMQ) for async processing
-
-### Issue: Large Database
-**Solution**: Implement archiving for old applications, add pagination
-
-### Issue: High Memory Usage (AI Service)
-**Solution**: Use smaller embedding model or implement model caching
-
-### Issue: Slow Search
-**Solution**: Use pgvector extension for efficient vector search
 
 ## Future Enhancements
 

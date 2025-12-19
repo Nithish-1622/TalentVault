@@ -44,12 +44,12 @@ export default function AISearchPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-6 lg:p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
             
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">AI-Powered Search</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">AI-Powered Search</h1>
             <p className="text-gray-600 text-lg">Find the perfect candidates using natural language queries</p>
           </div>
 

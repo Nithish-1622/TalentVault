@@ -149,21 +149,21 @@ export default function CandidatesPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-6 lg:p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
-              <Users className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">All Candidates</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">All Candidates</h1>
           </div>
-          <p className="text-gray-600">Manage and review candidate applications</p>
+          <p className="text-sm sm:text-base text-gray-600">Manage and review candidate applications</p>
         </div>
 
         {/* Statistics Cards */}
         {statistics && (
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <StatCard icon={Users} label="Total Candidates" value={statistics.total || 0} color="blue" />
             <StatCard icon={Clock} label="Applied" value={statistics.applied || 0} color="gray" />
             <StatCard icon={TrendingUp} label="Shortlisted" value={statistics.shortlisted || 0} color="purple" />
@@ -176,7 +176,7 @@ export default function CandidatesPage() {
         <div className="card mb-6">
           <div className="flex flex-col gap-4">
             {/* Main Search Row */}
-            <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <div className="flex-1">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -184,17 +184,17 @@ export default function CandidatesPage() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="input-field pl-10"
-                    placeholder="Search by name, email, role, or skills..."
+                    className="input-field pl-10 text-sm sm:text-base"
+                    placeholder="Search by name, email, role..."
                   />
                 </div>
               </div>
 
-              <div className="w-full md:w-48">
+              <div className="w-full sm:w-48">
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="input-field"
+                  className="input-field text-sm sm:text-base"
                 >
                   <option value="">All Statuses</option>
                   <option value="Applied">Applied</option>
@@ -207,7 +207,7 @@ export default function CandidatesPage() {
 
               <button
                 onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                className={`btn-secondary flex items-center gap-2 ${showAdvancedFilters ? 'bg-primary-50 text-primary-600' : ''}`}
+                className={`btn-secondary flex items-center justify-center gap-2 text-sm sm:text-base ${showAdvancedFilters ? 'bg-primary-50 text-primary-600' : ''}`}
               >
                 <SlidersHorizontal className="w-4 h-4" />
                 <span>Advanced</span>
@@ -216,14 +216,14 @@ export default function CandidatesPage() {
 
             {/* Advanced Filters */}
             {showAdvancedFilters && (
-              <div className="pt-4 border-t border-gray-200 grid md:grid-cols-3 gap-4">
+              <div className="pt-4 border-t border-gray-200 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Min Experience (years)</label>
                   <input
                     type="number"
                     value={filters.experienceMin}
                     onChange={(e) => setFilters({...filters, experienceMin: e.target.value})}
-                    className="input-field"
+                    className="input-field text-sm sm:text-base"
                     placeholder="0"
                     min="0"
                   />
@@ -234,12 +234,12 @@ export default function CandidatesPage() {
                     type="number"
                     value={filters.experienceMax}
                     onChange={(e) => setFilters({...filters, experienceMax: e.target.value})}
-                    className="input-field"
+                    className="input-field text-sm sm:text-base"
                     placeholder="20"
                     min="0"
                   />
                 </div>
-                <div className="flex items-end">
+                <div className="flex items-end sm:col-span-2 md:col-span-1">
                   <button
                     onClick={clearFilters}
                     className="w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium"
@@ -252,14 +252,14 @@ export default function CandidatesPage() {
 
             {/* Bulk Actions */}
             {selectedCandidates.length > 0 && (
-              <div className="pt-4 border-t border-gray-200 flex items-center gap-4">
+              <div className="pt-4 border-t border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <span className="text-sm font-medium text-gray-700">
                   {selectedCandidates.length} selected
                 </span>
                 <select
                   value={bulkAction}
                   onChange={(e) => setBulkAction(e.target.value)}
-                  className="input-field flex-1 max-w-xs"
+                  className="input-field flex-1 text-sm sm:text-base sm:max-w-xs"
                 >
                   <option value="">Select Action</option>
                   <option value="Shortlisted">Mark as Shortlisted</option>
@@ -268,26 +268,28 @@ export default function CandidatesPage() {
                   <option value="Hired">Mark as Hired</option>
                   <option value="export">Export Selected</option>
                 </select>
-                <button
-                  onClick={handleBulkAction}
-                  disabled={!bulkAction}
-                  className="btn-primary"
-                >
-                  Apply
-                </button>
-                <button
-                  onClick={() => setSelectedCandidates([])}
-                  className="btn-secondary"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleBulkAction}
+                    disabled={!bulkAction}
+                    className="btn-primary flex-1 sm:flex-none text-sm sm:text-base"
+                  >
+                    Apply
+                  </button>
+                  <button
+                    onClick={() => setSelectedCandidates([])}
+                    className="btn-secondary"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             )}
           </div>
         </div>
 
-        {/* Candidates Table */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        {/* Candidates Table - Desktop */}
+        <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
@@ -382,6 +384,70 @@ export default function CandidatesPage() {
               <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">No candidates found</h3>
               <p className="text-gray-600">
+                {searchQuery || statusFilter ? 'Try adjusting your search or filters' : 'No candidates yet'}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Candidates Cards - Mobile */}
+        <div className="md:hidden space-y-4">
+          {filteredCandidates.map((candidate) => (
+            <div key={candidate.id} className="card">
+              <div className="flex items-start gap-3 mb-3">
+                <input
+                  type="checkbox"
+                  checked={selectedCandidates.includes(candidate.id)}
+                  onChange={() => handleSelectCandidate(candidate.id)}
+                  className="w-5 h-5 text-primary-600 rounded mt-1"
+                />
+                <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-full flex items-center justify-center text-white font-semibold text-lg flex-shrink-0">
+                  {candidate.full_name?.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-gray-900 truncate">{candidate.full_name}</p>
+                  <p className="text-sm text-gray-600 truncate">{candidate.email}</p>
+                  <p className="text-sm text-gray-700 mt-1">{candidate.role_name}</p>
+                </div>
+              </div>
+              
+              <div className="mb-3">
+                <p className="text-xs font-medium text-gray-600 mb-2">Skills:</p>
+                <div className="flex flex-wrap gap-1">
+                  {candidate.skills?.slice(0, 3).map((skill, idx) => (
+                    <span key={idx} className="px-2 py-1 bg-primary-50 text-primary-700 rounded text-xs">
+                      {skill}
+                    </span>
+                  ))}
+                  {candidate.skills?.length > 3 && (
+                    <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs">
+                      +{candidate.skills.length - 3}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                <StatusBadge status={candidate.status} />
+                <button 
+                  onClick={() => {
+                    setSelectedCandidate(candidate);
+                    setShowDetailModal(true);
+                  }}
+                  className="text-primary-600 hover:text-primary-700 font-medium text-sm flex items-center gap-1"
+                >
+                  <Eye className="w-4 h-4" />
+                  View Details
+                </button>
+              </div>
+            </div>
+          ))}
+
+          {filteredCandidates.length === 0 && (
+            <div className="card text-center py-12">
+              <Users className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <h3 className="text-base font-medium text-gray-900 mb-1">No candidates found</h3>
+              <p className="text-sm text-gray-600">
                 {searchQuery || statusFilter ? 'Try adjusting your search or filters' : 'No candidates yet'}
               </p>
             </div>

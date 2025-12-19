@@ -85,13 +85,13 @@ export default function JobRolesPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-6 lg:p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-3 mb-2">
               
-              <h1 className="text-3xl font-bold text-gray-900">Job Roles</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Job Roles</h1>
             </div>
             <p className="text-gray-600">Manage your open positions and requirements</p>
           </div>

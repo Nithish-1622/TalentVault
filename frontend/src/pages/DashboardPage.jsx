@@ -109,14 +109,14 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout >
-      <div className="p-6 lg:p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
               <Users className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">All Candidates</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">All Candidates</h1>
           </div>
           <p className="text-gray-600">Manage and review candidate applications</p>
         </div>

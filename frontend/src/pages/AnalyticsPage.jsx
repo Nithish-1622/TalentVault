@@ -92,61 +92,60 @@ export default function AnalyticsPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-6 lg:p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              
-              <h1 className="text-3xl font-bold text-gray-900">Analytics & Reports</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Analytics & Reports</h1>
             </div>
-            <p className="text-gray-600">Track your recruitment metrics and performance</p>
+            <p className="text-sm sm:text-base text-gray-600">Track your recruitment metrics and performance</p>
           </div>
-          <button onClick={exportReport} className="btn-primary flex items-center gap-2">
-            <Download className="w-5 h-5" />
+          <button onClick={exportReport} className="btn-primary flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto justify-center">
+            <Download className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Export Report</span>
           </button>
         </div>
 
         {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-blue-600" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg sm:rounded-xl flex items-center justify-center">
+                <Users className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
-              <TrendingUp className="w-5 h-5 text-green-500" />
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900">{statistics?.total || 0}</h3>
-            <p className="text-sm text-gray-600">Total Candidates</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">{statistics?.total || 0}</h3>
+            <p className="text-xs sm:text-sm text-gray-600">Total Candidates</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                <Target className="w-6 h-6 text-purple-600" />
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg sm:rounded-xl flex items-center justify-center">
+                <Target className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
               </div>
-              <TrendingUp className="w-5 h-5 text-green-500" />
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900">{statistics?.shortlisted || 0}</h3>
-            <p className="text-sm text-gray-600">Shortlisted</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">{statistics?.shortlisted || 0}</h3>
+            <p className="text-xs sm:text-sm text-gray-600">Shortlisted</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-green-600" />
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg sm:rounded-xl flex items-center justify-center">
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
               </div>
-              <TrendingUp className="w-5 h-5 text-green-500" />
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900">{statistics?.hired || 0}</h3>
-            <p className="text-sm text-gray-600">Hired</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">{statistics?.hired || 0}</h3>
+            <p className="text-xs sm:text-sm text-gray-600">Hired</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
-                <Clock className="w-6 h-6 text-yellow-600" />
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-100 rounded-lg sm:rounded-xl flex items-center justify-center">
+                <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600" />
               </div>
             </div>
             <h3 className="text-2xl font-bold text-gray-900">
@@ -157,15 +156,15 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Charts Grid */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
           {/* Hiring Funnel */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Hiring Funnel</h2>
-            <ResponsiveContainer width="100%" height={300}>
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Hiring Funnel</h2>
+            <ResponsiveContainer width="100%" height={250}>
               <BarChart data={funnelData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="stage" />
-                <YAxis />
+                <XAxis dataKey="stage" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
                 <Bar dataKey="count" radius={[8, 8, 0, 0]}>
                   {funnelData.map((entry, index) => (
@@ -177,9 +176,9 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Status Distribution */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Status Distribution</h2>
-            <ResponsiveContainer width="100%" height={300}>
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Status Distribution</h2>
+            <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
                   data={statusData}
@@ -187,9 +186,10 @@ export default function AnalyticsPage() {
                   cy="50%"
                   labelLine={false}
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
+                  outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
+                  style={{ fontSize: '11px' }}
                 >
                   {statusData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -202,15 +202,15 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Applications Timeline & Top Skills */}
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Applications Over Time */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Applications This Week</h2>
-            <ResponsiveContainer width="100%" height={250}>
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Applications This Week</h2>
+            <ResponsiveContainer width="100%" height={220}>
               <LineChart data={timelineData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
+                <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
                 <Line 
                   type="monotone" 
@@ -224,13 +224,13 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Top Skills */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Top Skills in Demand</h2>
-            <ResponsiveContainer width="100%" height={250}>
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Top Skills in Demand</h2>
+            <ResponsiveContainer width="100%" height={220}>
               <BarChart data={topSkills} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis dataKey="name" type="category" width={100} />
+                <XAxis type="number" tick={{ fontSize: 12 }} />
+                <YAxis dataKey="name" type="category" width={80} tick={{ fontSize: 11 }} />
                 <Tooltip />
                 <Bar dataKey="value" fill="#10B981" radius={[0, 8, 8, 0]} />
               </BarChart>

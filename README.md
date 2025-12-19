@@ -387,30 +387,6 @@ npm run dev
 
 ---
 
-## 🎮 Usage Guide
-
-### 👤 For Applicants
-
-1. Visit `/apply`
-2. Fill 5 fields: Name, Email, Phone, Role, Resume
-3. Upload PDF/DOCX (max 5MB)
-4. Submit → AI processes resume in background
-
-### 👔 For Recruiters
-
-**First Time:**
-1. `/register` → Create account
-2. `/login` → Access dashboard
-
-**Dashboard Features:**
-- **Overview** - Real-time statistics, recent candidates
-- **Candidates** - Table view, bulk actions, resume preview
-- **AI Search** - Natural language queries
-- **Analytics** - Hiring funnel, charts, metrics
-- **Job Roles** - CRUD operations for positions
-
----
-
 ## 📚 API Documentation
 
 ### 🔗 Base URLs
@@ -614,71 +590,7 @@ TalentVault/
 | **Backend** | Render | https://talentvault-backend.onrender.com |
 | **AI Service** | Render | https://talentvault-ai-service.onrender.com |
 
-### Quick Deploy Instructions
 
-#### Frontend (Vercel)
-
-1. Import GitHub repo to [Vercel](https://vercel.com/)
-2. Set root directory: `frontend`
-3. Framework preset: `Vite`
-4. Add environment variable:
-   ```
-   VITE_API_URL=https://talentvault-backend.onrender.com/api/v1
-   ```
-5. Click **Deploy**
-
-#### Backend (Render)
-
-1. New Web Service → Connect GitHub repo
-2. Root directory: `backend`
-3. Build command: `npm install`
-4. Start command: `npm start`
-5. Add environment variables:
-   ```
-   NODE_ENV=production
-   SUPABASE_URL=<your_supabase_url>
-   SUPABASE_ANON_KEY=<your_anon_key>
-   SUPABASE_SERVICE_ROLE_KEY=<your_service_key>
-   JWT_SECRET=<random_secret_32+_chars>
-   AI_SERVICE_URL=https://talentvault-ai-service.onrender.com
-   CORS_ORIGIN=https://talent-vault-eight.vercel.app
-   ```
-
-#### AI Service (Render)
-
-1. New Web Service → Connect GitHub repo
-2. Root directory: `ai-service`
-3. Build command: `pip install -r requirements.txt`
-4. Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-5. Add environment variables:
-   ```
-   ENVIRONMENT=production
-   GROQ_API_KEY=<your_groq_api_key>
-   GROQ_MODEL=llama-3.3-70b-versatile
-   ```
-
-See [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) for detailed instructions.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Follow these steps:
-
-1. **Fork** the repository
-2. **Create** feature branch: `git checkout -b feature/AmazingFeature`
-3. **Commit** changes: `git commit -m 'Add AmazingFeature'`
-4. **Push** to branch: `git push origin feature/AmazingFeature`
-5. **Open** Pull Request
-
-### Development Guidelines
-
-- Follow existing code style
-- Add tests for new features
-- Update documentation
-- Keep commits atomic and descriptive
-
----
 
 ## 📄 License
 
