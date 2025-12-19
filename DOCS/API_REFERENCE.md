@@ -1,20 +1,61 @@
 # TalentVault - API Reference
 
-## Base URL
-```
-Development: http://localhost:5000/api/v1
-Production: https://your-domain.com/api/v1
-```
+## 🌐 Base URLs
 
-## Authentication
+### Backend API
+
+| Environment | URL |
+|------------|-----|
+| **Local Development** | `http://localhost:5000/api/v1` |
+| **Production (Render)** | `https://talentvault-backend.onrender.com/api/v1` |
+
+### AI Service
+
+| Environment | URL |
+|------------|-----|
+| **Local Development** | `http://localhost:8000` |
+| **Production (Render)** | `https://talentvault-ai-service.onrender.com` |
+
+### Frontend
+
+| Environment | URL |
+|------------|-----|
+| **Local Development** | `http://localhost:5173` |
+| **Production (Vercel)** | `https://talent-vault-eight.vercel.app` |
+
+## 🔧 Tech Stack
+
+### Backend (Node.js 18+)
+- **Express** 4.18.2 - Web framework
+- **@supabase/supabase-js** 2.39.1 - Database client
+- **jsonwebtoken** 9.0.2 - JWT authentication
+- **bcryptjs** 2.4.3 - Password hashing
+- **Multer** 1.4.5-lts.1 - File upload
+- **Helmet** 7.1.0 - Security headers
+- **Morgan** 1.10.0 - Request logging
+
+### AI Service (Python 3.13+)
+- **FastAPI** 0.115.6 - Async web framework
+- **GROQ** 0.12.0 - LLM inference (llama-3.3-70b-versatile)
+- **sentence-transformers** 3.3.1 - Semantic embeddings
+- **PyPDF2** 3.0.1 - PDF parsing
+- **python-docx** 1.1.2 - DOCX parsing
+
+---
+
+## 🔐 Authentication
 
 Most endpoints require JWT authentication. Include the token in the Authorization header:
 
-```
+```http
 Authorization: Bearer <your_jwt_token>
 ```
 
-## Status Codes
+**Token Expiry:** 7 days
+
+---
+
+## 📊 Status Codes
 
 - `200 OK` - Request successful
 - `201 Created` - Resource created successfully
@@ -154,9 +195,19 @@ Submit a job application with resume.
 - `jobRoleId` (uuid, optional)
 - `resume` (file, required) - PDF or DOCX, max 5MB
 
-**Example:**
+**Example (Local):**
 ```bash
 curl -X POST http://localhost:5000/api/v1/candidates/apply \
+  -F "fullName=Alice Chen" \
+  -F "email=alice@email.com" \
+  -F "phone=+1-555-0101" \
+  -F "jobRoleText=Frontend Developer" \
+  -F "resume=@/path/to/resume.pdf"
+```
+
+**Example (Production):**
+```bash
+curl -X POST https://talentvault-backend.onrender.com/api/v1/candidates/apply \
   -F "fullName=Alice Chen" \
   -F "email=alice@email.com" \
   -F "phone=+1-555-0101" \
@@ -195,9 +246,15 @@ Get list of all candidates with optional filters.
 - `jobRole` (string, optional) - Filter by job role name
 - `search` (string, optional) - Search by name or email
 
-**Example:**
+**Example (Local):**
 ```bash
 curl http://localhost:5000/api/v1/candidates?status=Shortlisted&search=alice \
+  -H "Authorization: Bearer <token>"
+```
+
+**Example (Production):**
+```bash
+curl https://talentvault-backend.onrender.com/api/v1/candidates?status=Shortlisted&search=alice \
   -H "Authorization: Bearer <token>"
 ```
 
@@ -542,10 +599,47 @@ Check if the API is running.
 
 ---
 
+## 📊 Complete Endpoint Reference
+
+### Backend API Endpoints
+
+| Endpoint | Method | Auth | Description | Production URL |
+|----------|--------|------|-------------|----------------|
+| `/health` | GET | ❌ | Health check | `https://talentvault-backend.onrender.com/api/v1/health` |
+| `/auth/register` | POST | ❌ | Register recruiter | `https://talentvault-backend.onrender.com/api/v1/auth/register` |
+| `/auth/login` | POST | ❌ | Login recruiter | `https://talentvault-backend.onrender.com/api/v1/auth/login` |
+| `/auth/profile` | GET | ✅ | Get profile | `https://talentvault-backend.onrender.com/api/v1/auth/profile` |
+| `/candidates/apply` | POST | ❌ | Submit application | `https://talentvault-backend.onrender.com/api/v1/candidates/apply` |
+| `/candidates` | GET | ✅ | Get all candidates | `https://talentvault-backend.onrender.com/api/v1/candidates` |
+| `/candidates/:id` | GET | ✅ | Get candidate by ID | `https://talentvault-backend.onrender.com/api/v1/candidates/:id` |
+| `/candidates/:id/status` | PUT | ✅ | Update status | `https://talentvault-backend.onrender.com/api/v1/candidates/:id/status` |
+| `/candidates/search` | POST | ✅ | AI semantic search | `https://talentvault-backend.onrender.com/api/v1/candidates/search` |
+| `/candidates/statistics` | GET | ✅ | Get statistics | `https://talentvault-backend.onrender.com/api/v1/candidates/statistics` |
+| `/job-roles` | GET | ❌ | Get all roles | `https://talentvault-backend.onrender.com/api/v1/job-roles` |
+| `/job-roles/:id` | GET | ❌ | Get role by ID | `https://talentvault-backend.onrender.com/api/v1/job-roles/:id` |
+| `/job-roles/categories` | GET | ❌ | Get categories | `https://talentvault-backend.onrender.com/api/v1/job-roles/categories` |
+| `/job-roles` | POST | ✅ | Create role | `https://talentvault-backend.onrender.com/api/v1/job-roles` |
+
+### AI Service Endpoints (Internal Use)
+
+| Endpoint | Method | Description | Production URL |
+|----------|--------|-------------|----------------|
+| `/health` | GET | Health check | `https://talentvault-ai-service.onrender.com/health` |
+| `/` | GET | Service info | `https://talentvault-ai-service.onrender.com/` |
+| `/parse-resume` | POST | Parse resume (called by backend) | Internal |
+| `/generate-summary` | POST | Generate AI summary (called by backend) | Internal |
+
+**Note:** AI Service endpoints are called internally by the backend and not exposed to the frontend.
+
+---
+
 ## Notes
 
 1. All timestamps are in ISO 8601 format (UTC)
 2. UUIDs are used for all IDs
 3. File uploads must be PDF or DOCX, max 5MB
-4. Semantic search may take 2-5 seconds depending on candidate count
+4. Semantic search uses GROQ AI (llama-3.3-70b-versatile model)
 5. AI processing happens asynchronously after application submission
+6. JWT tokens expire after 7 days
+7. Rate limiting: 100 requests per 15 minutes per IP
+8. All production endpoints use HTTPS

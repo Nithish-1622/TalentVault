@@ -52,3 +52,5 @@ temp/
 # Testing
 coverage/
 .pytest_cache/
+
+/refr.txt

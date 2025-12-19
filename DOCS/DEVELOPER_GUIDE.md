@@ -1,6 +1,62 @@
 # TalentVault - Developer Guide
 
-## Development Workflow
+## 🛠 Tech Stack Overview
+
+### Frontend (React 18 + Vite 5)
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| React | 18.2.0 | UI Framework |
+| Vite | 5.0.8 | Build Tool & Dev Server |
+| Tailwind CSS | 3.4.0 | Utility-First Styling |
+| React Router DOM | 6.21.1 | Client-Side Routing |
+| Recharts | 2.10.3 | Data Visualization & Charts |
+| Axios | 1.6.5 | HTTP Client |
+| @lottiefiles/dotlottie-react | 0.11.6 | Lottie Animations |
+| Lucide React | 0.303.0 | Icon Library |
+
+### Backend (Node.js 18+)
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Express | 4.18.2 | Web Framework |
+| @supabase/supabase-js | 2.39.1 | Database Client |
+| jsonwebtoken | 9.0.2 | JWT Authentication |
+| bcryptjs | 2.4.3 | Password Hashing |
+| Multer | 1.4.5-lts.1 | File Upload Handling |
+| Helmet | 7.1.0 | Security Headers |
+| Morgan | 1.10.0 | HTTP Request Logging |
+
+### AI Service (Python 3.13+)
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| FastAPI | 0.115.6 | Async Web Framework |
+| GROQ | 0.12.0 | LLM Inference (llama-3.3-70b) |
+| sentence-transformers | 3.3.1 | Semantic Embeddings |
+| PyPDF2 | 3.0.1 | PDF Text Extraction |
+| python-docx | 1.1.2 | DOCX Text Extraction |
+
+### Infrastructure
+- **Database:** Supabase PostgreSQL
+- **Storage:** Supabase Storage (S3-like)
+- **Frontend Hosting:** Vercel
+- **Backend Hosting:** Render (2 services)
+
+---
+
+## 🌐 Environment URLs
+
+### Local Development
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
+- AI Service: `http://localhost:8000`
+
+### Production
+- Frontend: `https://talent-vault-eight.vercel.app`
+- Backend: `https://talentvault-backend.onrender.com`
+- AI Service: `https://talentvault-ai-service.onrender.com`
+
+---
+
+## 💻 Development Workflow
 
 ### Adding a New Feature
 
@@ -51,55 +107,148 @@ MAX_FILE_SIZE=5242880
 ALLOWED_FILE_TYPES=application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document
 CORS_ORIGIN=http://localhost:5173
 RESUME_BUCKET_NAME=resumes
-```
+```  
 
 #### AI Service
 ```env
 ENVIRONMENT=development|production
-HOST=0.0.0.0
 PORT=8000
-EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
-SIMILARITY_THRESHOLD=0.5
-MAX_RESULTS=20
-MAX_TEXT_LENGTH=50000
-CHUNK_SIZE=512
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.3-70b-versatile
 ```
+
+**Get GROQ API Key:** https://console.groq.com (free tier available)
 
 #### Frontend
 ```env
 VITE_API_URL=http://localhost:5000/api/v1
 ```
 
-## Testing
+## 🚀 Deployment
+
+### Current Production Setup
+
+| Service | Platform | URL | Status |
+|---------|----------|-----|--------|
+| **Frontend** | Vercel | https://talent-vault-eight.vercel.app | ✅ Live |
+| **Backend** | Render | https://talentvault-backend.onrender.com | ✅ Live |
+| **AI Service** | Render | https://talentvault-ai-service.onrender.com | ✅ Live |
+
+### Deployment Steps
+
+#### 1. Frontend (Vercel)
+
+1. **Import GitHub Repo** to [Vercel](https://vercel.com)
+2. **Configure Build Settings:**
+   - Framework Preset: `Vite`
+   - Root Directory: `frontend`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+3. **Set Environment Variable:**
+   ```
+   VITE_API_URL=https://talentvault-backend.onrender.com/api/v1
+   ```
+4. **Deploy** - Automatic deployments on push to main
+
+#### 2. Backend (Render)
+
+1. **Create New Web Service** on [Render](https://render.com)
+2. **Connect GitHub Repository**
+3. **Configure Settings:**
+   - Name: `talentvault-backend`
+   - Root Directory: `backend`
+   - Environment: `Node`
+   - Build Command: `npm install`
+   - Start Command: `npm start`
+4. **Set Environment Variables:**
+   ```
+   NODE_ENV=production
+   PORT=5000
+   SUPABASE_URL=your_project_URL
+   SUPABASE_ANON_KEY=eyJhbGci...
+   SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
+   JWT_SECRET=<generate 32+ char random string>
+   AI_SERVICE_URL=https://talentvault-ai-service.onrender.com
+   CORS_ORIGIN=https://talent-vault-eight.vercel.app
+   ```
+5. **Deploy** - Manual or automatic on push
+
+#### 3. AI Service (Render)
+
+1. **Create New Web Service** on [Render](https://render.com)
+2. **Connect GitHub Repository**
+3. **Configure Settings:**
+   - Name: `talentvault-ai-service`
+   - Root Directory: `ai-service`
+   - Environment: `Python 3`
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+4. **Set Environment Variables:**
+   ```
+   ENVIRONMENT=production
+   PORT=8000
+   GROQ_API_KEY=your_GROQ_API_KEY
+   GROQ_MODEL=llama-3.3-70b-versatile
+   ```
+5. **Deploy** - Manual or automatic on push
+
+### Post-Deployment Verification
+
+```bash
+# Test Frontend
+curl https://talent-vault-eight.vercel.app
+
+# Test Backend Health
+curl https://talentvault-backend.onrender.com/api/v1/health
+
+# Test AI Service Health
+curl https://talentvault-ai-service.onrender.com/health
+
+# Test Job Roles Endpoint
+curl https://talentvault-backend.onrender.com/api/v1/job-roles
+```
+
+---
+
+## 🔒 Security Best Practices
 
 ### Manual Testing
 
 #### Test Applicant Flow
 ```bash
-# Using curl
+# Using curl (Local)
+```bash
 curl -X POST http://localhost:5000/api/v1/candidates/apply \
   -F "fullName=Test User" \
   -F "email=test@example.com" \
   -F "phone=+1-555-0123" \
-  -F "jobRoleText=Developer" \
+  -F "jobRoleText=Backend Developer" \
   -F "resume=@/path/to/resume.pdf"
 ```
 
-#### Test Recruiter Login
+#### Test Applicant Flow (Production)
+```bash
+curl -X POST https://talentvault-backend.onrender.com/api/v1/candidates/apply \
+  -F "fullName=Test User" \
+  -F "email=test@example.com" \
+  -F "phone=+1-555-0123" \
+  -F "jobRoleText=Backend Developer" \
+  -F "resume=@/path/to/resume.pdf"
+```
+
+#### Test Recruiter Login (Local)
 ```bash
 curl -X POST http://localhost:5000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"recruiter@test.com","password":"Test123456"}'
 ```
 
-#### Test Semantic Search
+#### Test Semantic Search (Local)
 ```bash
 curl -X POST http://localhost:5000/api/v1/candidates/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN" \
-  -d '{"query":"Backend developers with Python"}'
-```
-
+  -d '{"query":"Backend developers with Python and FastAPI
 ### Database Queries for Testing
 
 ```sql
@@ -219,40 +368,6 @@ SELECT status, COUNT(*) as count FROM candidates GROUP BY status;
 9. **Log security events**
 10. **Regular security audits**
 
-## Deployment Checklist
-
-### Pre-Deployment
-- [ ] All environment variables configured
-- [ ] Database migrations run
-- [ ] Storage buckets created
-- [ ] CORS configured for production domain
-- [ ] Rate limits adjusted for production
-- [ ] Logs configured
-- [ ] Error tracking setup (Sentry, etc.)
-
-### Backend Deployment
-- [ ] Set NODE_ENV=production
-- [ ] Configure production database URL
-- [ ] Set up SSL/TLS
-- [ ] Configure reverse proxy (Nginx)
-- [ ] Set up process manager (PM2)
-- [ ] Configure health checks
-- [ ] Set up monitoring
-
-### AI Service Deployment
-- [ ] Pre-download ML models in container
-- [ ] Configure appropriate instance size (2GB+ RAM)
-- [ ] Set up health checks
-- [ ] Configure timeouts for long operations
-- [ ] Monitor memory usage
-
-### Frontend Deployment
-- [ ] Build with `npm run build`
-- [ ] Configure production API URL
-- [ ] Set up CDN for static assets
-- [ ] Configure caching headers
-- [ ] Set up analytics
-- [ ] Configure error boundaries
 
 ## Common Issues and Solutions
 
