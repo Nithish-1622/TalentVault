@@ -3,7 +3,7 @@ import {
   Search, Filter, Download, Eye, Users, 
   TrendingUp, Clock, CheckCircle, FileText 
 } from 'lucide-react';
-import Navbar from '../components/Navbar';
+import DashboardLayout from '../components/DashboardLayout';
 import StatusBadge from '../components/StatusBadge';
 import Loader from '../components/Loader';
 import { candidateService } from '../services/candidateService';
@@ -108,10 +108,19 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <DashboardLayout >
+      <div className="p-6 lg:p-8">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+              <Users className="w-6 h-6 text-white" />
+            </div>
+            <h1 className="text-3xl font-bold text-gray-900">All Candidates</h1>
+          </div>
+          <p className="text-gray-600">Manage and review candidate applications</p>
+        </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Statistics Cards */}
         {statistics && (
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
@@ -245,7 +254,7 @@ export default function DashboardPage() {
           onStatusChange={handleStatusChange}
         />
       )}
-    </div>
+    </DashboardLayout>
   );
 }
 
