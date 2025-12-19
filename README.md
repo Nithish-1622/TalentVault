@@ -149,16 +149,13 @@ TalentVault is a production-ready, recruiter-first talent management system that
 ### AI Service (Python)
 - **FastAPI** - API framework
 - **Uvicorn** - ASGI server
-- **Sentence Transformers** - Embeddings
+- **GROQ** - AI inference API (fast LLM)
 - **PyPDF2 / pdfplumber** - PDF parsing
 - **python-docx** - DOCX parsing
-- **scikit-learn** - Similarity calculations
-- **NLTK** - Natural language processing
 
 ### Database & Storage
 - **Supabase PostgreSQL** - Primary database
 - **Supabase Storage** - Resume file storage
-- **pgvector** (Optional) - Vector embeddings
 
 ---
 
@@ -229,7 +226,9 @@ pip install -r requirements.txt
 # Create .env file
 cp .env.example .env
 
-# The AI service will download the embedding model on first run
+# Edit .env and add your GROQ API key
+# Get free API key from: https://console.groq.com
+# GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ### 5. Frontend Setup (React)

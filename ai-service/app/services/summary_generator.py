@@ -1,8 +1,13 @@
+from groq import Groq
 from typing import List
 
 
 class SummaryGenerator:
-    """Service for generating candidate summaries"""
+    """Service for generating candidate summaries using GROQ"""
+
+    def __init__(self, api_key: str, model: str = "llama-3.3-70b-versatile"):
+        self.client = Groq(api_key=api_key)
+        self.model = model
 
     def generate_summary(
         self, 
@@ -10,78 +15,60 @@ class SummaryGenerator:
         skills: List[str], 
         experience_years: int
     ) -> str:
-        """Generate a concise recruiter-friendly summary"""
+        """Generate a concise recruiter-friendly summary using GROQ"""
         
-        # Extract key information from text
-        lines = resume_text.split('\n')
+        # Prepare context for GROQ
+        context = f"""
+Resume Text: {resume_text[:2000]}
+Identified Skills: {', '.join(skills[:10])}
+Experience: {experience_years} years
+"""
         
-        # Find potential job titles or roles
-        role_keywords = [
-            'developer', 'engineer', 'scientist', 'analyst', 'manager',
-            'designer', 'architect', 'consultant', 'specialist', 'lead'
-        ]
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{
+                    "role": "system",
+                    "content": "You are a professional recruiter assistant. Generate a concise 2-3 sentence summary of the candidate's profile for recruiters. Focus on key strengths, experience level, and core competencies. Be professional and factual."
+                }, {
+                    "role": "user",
+                    "content": context
+                }],
+                temperature=0.3,
+                max_tokens=150
+            )
+            
+            summary = response.choices[0].message.content.strip()
+            
+            # Ensure summary is concise (max 250 chars)
+            if len(summary) > 250:
+                summary = summary[:247] + "..."
+            
+            return summary
+            
+        except Exception as e:
+            print(f"Error generating summary with GROQ: {e}")
+            # Fallback to simple summary
+            return self._generate_simple_summary(skills, experience_years)
+    
+    def _generate_simple_summary(self, skills: List[str], experience_years: int) -> str:
+        """Fallback simple summary generation"""
+        top_skills = skills[:3] if skills else []
         
-        role = "Professional"
-        for line in lines[:10]:  # Check first 10 lines
-            line_lower = line.lower()
-            for keyword in role_keywords:
-                if keyword in line_lower:
-                    role = line.strip()
-                    break
-            if role != "Professional":
-                break
-        
-        # Get top skills (max 5)
-        top_skills = skills[:5] if len(skills) > 5 else skills
-        
-        # Build summary
-        summary_parts = []
-        
-        # Experience and role
         if experience_years > 0:
             exp_text = f"{experience_years}+ years" if experience_years >= 10 else f"{experience_years} years"
-            summary_parts.append(f"Experienced professional with {exp_text} of expertise")
+            summary = f"Experienced professional with {exp_text} of expertise"
         else:
-            summary_parts.append("Skilled professional")
+            summary = "Skilled professional"
         
-        # Skills
         if top_skills:
-            skills_text = ", ".join(top_skills[:3])
-            if len(top_skills) > 3:
-                skills_text += f", and {len(top_skills) - 3} more technologies"
-            summary_parts.append(f"in {skills_text}")
+            skills_text = ", ".join(top_skills)
+            summary += f" in {skills_text}"
         
-        # Additional context
-        context_keywords = {
-            'startup': 'startup experience',
-            'enterprise': 'enterprise environment',
-            'remote': 'remote work',
-            'agile': 'agile methodologies',
-            'team lead': 'leadership skills',
-            'mentoring': 'mentoring experience'
-        }
-        
-        text_lower = resume_text.lower()
-        found_contexts = []
-        for keyword, description in context_keywords.items():
-            if keyword in text_lower:
-                found_contexts.append(description)
-                if len(found_contexts) >= 2:
-                    break
-        
-        if found_contexts:
-            summary_parts.append(f"Strong background in {' and '.join(found_contexts)}")
-        
-        # Combine parts
-        summary = ". ".join(summary_parts) + "."
-        
-        # Ensure summary is concise (max 200 chars)
-        if len(summary) > 200:
-            summary = summary[:197] + "..."
-        
+        summary += "."
         return summary
 
 
-def get_summary_generator():
+def get_summary_generator(api_key: str, model: str = "llama-3.3-70b-versatile"):
     """Get summary generator instance"""
-    return SummaryGenerator()
+    return SummaryGenerator(api_key, model)

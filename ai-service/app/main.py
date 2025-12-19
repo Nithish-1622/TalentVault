@@ -29,7 +29,7 @@ async def startup_event():
     print("=" * 60)
     print("🤖 TalentVault AI Service Starting...")
     print(f"Environment: {settings.environment}")
-    print(f"Model: {settings.embedding_model}")
+    print(f"Model: {settings.groq_model}")
     print("=" * 60)
 
 

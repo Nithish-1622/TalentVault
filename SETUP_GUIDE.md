@@ -85,15 +85,18 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-The `.env` file has sensible defaults, but you can customize:
+Edit `ai-service/.env` and add your GROQ API key:
 ```env
 ENVIRONMENT=development
 HOST=0.0.0.0
 PORT=8000
-EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+
+# Get your free GROQ API key from: https://console.groq.com
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.3-70b-versatile
 ```
 
-**Note**: The embedding model (380MB) will be downloaded automatically on first run.
+**Note**: GROQ is a fast AI inference service. Get your free API key at https://console.groq.com
 
 ### 4. Frontend Setup (2 minutes)
 

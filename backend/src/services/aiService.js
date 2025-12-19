@@ -21,8 +21,8 @@ export const aiService = {
       });
       return response.data;
     } catch (error) {
-      console.error('AI Service - Parse Resume Error:', error.message);
-      throw new Error('Failed to parse resume');
+      console.error('AI Service - Parse Resume Error:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.detail || 'Failed to parse resume');
     }
   },
 
@@ -36,8 +36,8 @@ export const aiService = {
       });
       return response.data;
     } catch (error) {
-      console.error('AI Service - Generate Embeddings Error:', error.message);
-      throw new Error('Failed to generate embeddings');
+      console.error('AI Service - Generate Embeddings Error:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.detail || 'Failed to generate embeddings');
     }
   },
 
@@ -52,8 +52,8 @@ export const aiService = {
       });
       return response.data;
     } catch (error) {
-      console.error('AI Service - Semantic Search Error:', error.message);
-      throw new Error('Failed to perform semantic search');
+      console.error('AI Service - Semantic Search Error:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.detail || 'Failed to perform semantic search');
     }
   },
 
@@ -69,8 +69,8 @@ export const aiService = {
       });
       return response.data;
     } catch (error) {
-      console.error('AI Service - Generate Summary Error:', error.message);
-      throw new Error('Failed to generate summary');
+      console.error('AI Service - Generate Summary Error:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.detail || 'Failed to generate summary');
     }
   },
 

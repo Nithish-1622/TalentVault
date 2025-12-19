@@ -8,8 +8,11 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
 
-    # Model Configuration
-    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    # GROQ API Configuration
+    groq_api_key: str
+    groq_model: str = "llama-3.3-70b-versatile"
+    
+    # Search Configuration
     similarity_threshold: float = 0.5
     max_results: int = 20
 
