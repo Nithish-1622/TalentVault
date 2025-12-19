@@ -1,0 +1,551 @@
+# TalentVault - API Reference
+
+## Base URL
+```
+Development: http://localhost:5000/api/v1
+Production: https://your-domain.com/api/v1
+```
+
+## Authentication
+
+Most endpoints require JWT authentication. Include the token in the Authorization header:
+
+```
+Authorization: Bearer <your_jwt_token>
+```
+
+## Status Codes
+
+- `200 OK` - Request successful
+- `201 Created` - Resource created successfully
+- `400 Bad Request` - Invalid request data
+- `401 Unauthorized` - Authentication required or failed
+- `403 Forbidden` - Insufficient permissions
+- `404 Not Found` - Resource not found
+- `500 Internal Server Error` - Server error
+
+## Response Format
+
+All responses follow this format:
+
+```json
+{
+  "success": true|false,
+  "message": "Optional message",
+  "data": { ... },
+  "error": "Error message if success is false"
+}
+```
+
+---
+
+## Authentication Endpoints
+
+### Register Recruiter
+
+Create a new recruiter account.
+
+**Endpoint:** `POST /auth/register`
+
+**Access:** Public
+
+**Request Body:**
+```json
+{
+  "email": "recruiter@company.com",
+  "password": "SecurePassword123",
+  "fullName": "John Doe",
+  "companyName": "Tech Corp"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Recruiter registered successfully",
+  "data": {
+    "recruiter": {
+      "id": "uuid",
+      "email": "recruiter@company.com",
+      "fullName": "John Doe",
+      "companyName": "Tech Corp",
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    "token": "jwt_token_here"
+  }
+}
+```
+
+### Login
+
+Authenticate and receive JWT token.
+
+**Endpoint:** `POST /auth/login`
+
+**Access:** Public
+
+**Request Body:**
+```json
+{
+  "email": "recruiter@company.com",
+  "password": "SecurePassword123"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "recruiter": {
+      "id": "uuid",
+      "email": "recruiter@company.com",
+      "fullName": "John Doe",
+      "companyName": "Tech Corp"
+    },
+    "token": "jwt_token_here"
+  }
+}
+```
+
+### Get Profile
+
+Get current recruiter profile.
+
+**Endpoint:** `GET /auth/profile`
+
+**Access:** Private (Recruiter)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "email": "recruiter@company.com",
+    "fullName": "John Doe",
+    "companyName": "Tech Corp",
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+---
+
+## Candidate Endpoints
+
+### Submit Application
+
+Submit a job application with resume.
+
+**Endpoint:** `POST /candidates/apply`
+
+**Access:** Public
+
+**Request:** `multipart/form-data`
+
+**Form Fields:**
+- `fullName` (string, required)
+- `email` (string, required)
+- `phone` (string, required)
+- `jobRoleText` (string, required)
+- `jobRoleId` (uuid, optional)
+- `resume` (file, required) - PDF or DOCX, max 5MB
+
+**Example:**
+```bash
+curl -X POST http://localhost:5000/api/v1/candidates/apply \
+  -F "fullName=Alice Chen" \
+  -F "email=alice@email.com" \
+  -F "phone=+1-555-0101" \
+  -F "jobRoleText=Frontend Developer" \
+  -F "resume=@/path/to/resume.pdf"
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Application submitted successfully",
+  "data": {
+    "id": "uuid",
+    "full_name": "Alice Chen",
+    "email": "alice@email.com",
+    "phone": "+1-555-0101",
+    "job_role_text": "Frontend Developer",
+    "resume_url": "https://...",
+    "status": "Applied",
+    "applied_at": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+### Get All Candidates
+
+Get list of all candidates with optional filters.
+
+**Endpoint:** `GET /candidates`
+
+**Access:** Private (Recruiter)
+
+**Query Parameters:**
+- `status` (string, optional) - Applied, Shortlisted, Interviewed, Rejected, Hired
+- `jobRole` (string, optional) - Filter by job role name
+- `search` (string, optional) - Search by name or email
+
+**Example:**
+```bash
+curl http://localhost:5000/api/v1/candidates?status=Shortlisted&search=alice \
+  -H "Authorization: Bearer <token>"
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "count": 2,
+  "data": [
+    {
+      "id": "uuid",
+      "full_name": "Alice Chen",
+      "email": "alice@email.com",
+      "phone": "+1-555-0101",
+      "role_name": "Frontend Developer",
+      "status": "Shortlisted",
+      "summary": "Experienced Frontend Developer with 5 years...",
+      "skills": ["React", "JavaScript", "TypeScript"],
+      "experience_years": 5,
+      "education": [...],
+      "applied_at": "2024-01-01T00:00:00Z"
+    }
+  ]
+}
+```
+
+### Get Candidate by ID
+
+Get detailed information about a specific candidate.
+
+**Endpoint:** `GET /candidates/:id`
+
+**Access:** Private (Recruiter)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "full_name": "Alice Chen",
+    "email": "alice@email.com",
+    "phone": "+1-555-0101",
+    "role_name": "Frontend Developer",
+    "category": "Engineering",
+    "resume_url": "https://...",
+    "resume_filename": "alice-resume.pdf",
+    "status": "Shortlisted",
+    "notes": null,
+    "summary": "Experienced Frontend Developer...",
+    "skills": ["React", "Vue.js", "JavaScript"],
+    "experience_years": 5,
+    "education": [
+      {
+        "degree": "Bachelor of Science",
+        "field": "Computer Science",
+        "institution": "Stanford University",
+        "year": 2018
+      }
+    ],
+    "certifications": [],
+    "languages": ["English", "Mandarin"],
+    "applied_at": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+### Update Candidate Status
+
+Update the status of a candidate application.
+
+**Endpoint:** `PUT /candidates/:id/status`
+
+**Access:** Private (Recruiter)
+
+**Request Body:**
+```json
+{
+  "status": "Shortlisted",
+  "notes": "Strong candidate, schedule interview"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Candidate status updated successfully",
+  "data": {
+    "id": "uuid",
+    "status": "Shortlisted",
+    "notes": "Strong candidate, schedule interview",
+    "updated_at": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+### Semantic Search
+
+Perform AI-powered semantic search with natural language query.
+
+**Endpoint:** `POST /candidates/search`
+
+**Access:** Private (Recruiter)
+
+**Request Body:**
+```json
+{
+  "query": "Backend developers with Python and FastAPI experience"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "query": "Backend developers with Python and FastAPI experience",
+  "count": 3,
+  "data": [
+    {
+      "id": "uuid",
+      "full_name": "Bob Martinez",
+      "email": "bob@email.com",
+      "role_name": "Backend Developer",
+      "status": "Applied",
+      "summary": "Backend specialist with 6 years...",
+      "skills": ["Python", "FastAPI", "Node.js"],
+      "relevance_score": 0.89,
+      "match_reason": "High relevance match based on skills and experience",
+      "applied_at": "2024-01-01T00:00:00Z"
+    }
+  ]
+}
+```
+
+### Get Statistics
+
+Get candidate statistics by status.
+
+**Endpoint:** `GET /candidates/statistics`
+
+**Access:** Private (Recruiter)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "total": 50,
+    "applied": 20,
+    "shortlisted": 15,
+    "interviewed": 10,
+    "hired": 5
+  }
+}
+```
+
+---
+
+## Job Role Endpoints
+
+### Get All Job Roles
+
+Get list of all available job roles.
+
+**Endpoint:** `GET /job-roles`
+
+**Access:** Public
+
+**Response:**
+```json
+{
+  "success": true,
+  "count": 15,
+  "data": [
+    {
+      "id": "uuid",
+      "role_name": "Frontend Developer",
+      "category": "Engineering",
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "uuid",
+      "role_name": "Backend Developer",
+      "category": "Engineering",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  ]
+}
+```
+
+### Get Job Role by ID
+
+Get details of a specific job role.
+
+**Endpoint:** `GET /job-roles/:id`
+
+**Access:** Public
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "uuid",
+    "role_name": "Frontend Developer",
+    "category": "Engineering",
+    "created_at": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+### Get Categories
+
+Get list of all job role categories.
+
+**Endpoint:** `GET /job-roles/categories`
+
+**Access:** Public
+
+**Response:**
+```json
+{
+  "success": true,
+  "count": 5,
+  "data": [
+    "Engineering",
+    "Data & Analytics",
+    "Product",
+    "Design",
+    "Management"
+  ]
+}
+```
+
+### Create Job Role
+
+Create a new job role.
+
+**Endpoint:** `POST /job-roles`
+
+**Access:** Private (Recruiter)
+
+**Request Body:**
+```json
+{
+  "roleName": "Senior Backend Engineer",
+  "category": "Engineering"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Job role created successfully",
+  "data": {
+    "id": "uuid",
+    "role_name": "Senior Backend Engineer",
+    "category": "Engineering",
+    "created_at": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+---
+
+## Health Check
+
+### API Health
+
+Check if the API is running.
+
+**Endpoint:** `GET /health`
+
+**Access:** Public
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "TalentVault API is running",
+  "timestamp": "2024-01-01T00:00:00Z"
+}
+```
+
+---
+
+## Error Responses
+
+### Validation Error
+```json
+{
+  "success": false,
+  "errors": [
+    {
+      "field": "email",
+      "message": "Please provide a valid email"
+    },
+    {
+      "field": "password",
+      "message": "Password must be at least 8 characters long"
+    }
+  ]
+}
+```
+
+### Authentication Error
+```json
+{
+  "success": false,
+  "error": "No token provided. Access denied."
+}
+```
+
+### Not Found Error
+```json
+{
+  "success": false,
+  "error": "Candidate not found"
+}
+```
+
+### Server Error
+```json
+{
+  "success": false,
+  "error": "Internal server error"
+}
+```
+
+---
+
+## Rate Limiting
+
+- **Window:** 15 minutes
+- **Max Requests:** 100 per IP
+- **Headers:**
+  - `X-RateLimit-Limit`: Max requests allowed
+  - `X-RateLimit-Remaining`: Requests remaining
+  - `X-RateLimit-Reset`: Time when limit resets
+
+---
+
+## Notes
+
+1. All timestamps are in ISO 8601 format (UTC)
+2. UUIDs are used for all IDs
+3. File uploads must be PDF or DOCX, max 5MB
+4. Semantic search may take 2-5 seconds depending on candidate count
+5. AI processing happens asynchronously after application submission
